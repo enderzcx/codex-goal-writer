@@ -51,6 +51,13 @@ The output should be a copy-ready `/goal` prompt with verification commands, wri
 bash scripts/validate.sh
 ```
 
+## References
+
+- [OpenAI Codex — Follow a goal](https://developers.openai.com/codex/use-cases/follow-goals): highlights durable objectives, verifiable stopping conditions, and validation loops for long-running work.
+- [OpenAI Codex — Save workflows as skills](https://developers.openai.com/codex/use-cases/reusable-codex-skills): describes skills as reusable bundles of instructions, resources, and scripts, which is the structure used here.
+- [Feishu /goal research doc](https://xiangyangqiaomu.feishu.cn/wiki/YQn6wZ1hzijlRvkU1E6cEL5mnic): the main inspiration for the six-element structure and local workflow rules.
+- This repo's [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md) and [templates.md](./skills/goal-writer/references/templates.md): the localized implementation of those references inside the Codex skill.
+
 ## Repo Layout
 
 ```text

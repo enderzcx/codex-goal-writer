@@ -11,7 +11,7 @@ Use this skill only when a Codex task needs a durable goal contract with verifia
 
 AGENTS.md is the trigger gate; this skill is the generator. If AGENTS requires `$goal-writer`, follow this skill to produce or review the goal prompt.
 
-If the caller provides Gravity (`G1`, `G2`, `G3`) or project risk context, reflect it in the goal strictness. For `G3`, include review, rollback, explicit approval, and stronger verification gates.
+If the caller provides a project risk label, reflect it in the goal strictness. Do not assume a specific framework; use plain labels such as low risk, medium risk, and high risk unless the user provides their own scheme. For high-risk work, include review, rollback, explicit approval, and stronger verification gates.
 
 ## Output Contract
 
@@ -31,7 +31,7 @@ If any required element is missing and cannot be discovered from repo/docs/conte
 ## Workflow
 
 1. Classify the requested goal: software delivery, debugging, migration, docs sync, research, data/report, product/PM, external-system cleanup, or multi-phase roadmap.
-2. Capture known risk context: Gravity, production exposure, external writes, credentials, customer data, and whether the user wants one goal or staged goals.
+2. Capture known risk context: production exposure, external writes, credentials, customer data, custom risk labels if provided, and whether the user wants one goal or staged goals.
 3. Explore discoverable facts first: repo scripts, test commands, docs, existing plans, CI, package manager, target paths, and repo state when needed.
 4. Draft the goal using the six-element contract.
 5. Run a quality pass:

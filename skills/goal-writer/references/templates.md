@@ -65,10 +65,10 @@ Pause if:
 - A production write, credential, deploy, delete, merge, or external permission change is needed.
 ```
 
-For G3 work, add:
+For high-risk work, add:
 
 ```text
-G3 safety:
+High-risk safety:
 - Do not release without review until GO.
 - Include rollback plan and exact verification evidence.
 - Pause before schema, credential, payment, permission, deploy, delete, or irreversible external changes.

@@ -104,7 +104,7 @@ Pause when:
 - Iteration policy prevents blind loops.
 - Pause conditions are explicit.
 - Risky external actions require user approval.
-- G3 goals include review, rollback, approval, and stronger verification gates.
+- High-risk goals include review, rollback, approval, and stronger verification gates.
 - The final answer is copy-ready.
 
 ## Common Fixes

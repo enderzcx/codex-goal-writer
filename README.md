@@ -127,18 +127,20 @@ skill 里带了两份参考材料：
 
 `SKILL.md` 保持短，详细内容放在 `references/` 里，避免每次触发都塞太多上下文。
 
-## Gravity 风险
+## 风险分层
 
-如果任务带有 Gravity 或风险等级，`goal-writer` 会根据风险调整严格程度：
+你不需要有任何内部流程体系，也可以直接使用 `goal-writer`。它默认只按任务风险粗分：
 
-- G1：本地低风险任务，正常验证和边界即可。
-- G2：workflow、prompt、pipeline、CI、配置等中等风险任务，需要明确验证和回滚思路。
-- G3：生产、凭证、权限、支付、部署、删除、不可逆外部写，必须加入 review、rollback、approval 和更强验证面。
+- 低风险：本地、可逆、只影响当前仓库的小改动，写清楚验证和边界即可。
+- 中风险：CI、配置、workflow、prompt、pipeline、跨模块重构，需要更明确的回滚思路和阶段验收。
+- 高风险：生产、凭证、权限、支付、部署、删除、客户数据、不可逆外部写，必须加入 review、rollback、explicit approval 和更强验证面。
 
-G3 goal 应该包含类似约束：
+如果你的团队本来就有自己的风险等级，也可以把它映射进 goal，但这不是使用前提。
+
+高风险 goal 应该包含类似约束：
 
 ```text
-G3 safety:
+High-risk safety:
 - Do not release without review until GO.
 - Include rollback plan and exact verification evidence.
 - Pause before schema, credential, payment, permission, deploy, delete, or irreversible external changes.
@@ -164,6 +166,13 @@ bash scripts/validate.sh
 ```
 
 这个脚本会检查 skill 文件是否存在，`SKILL.md` frontmatter 是否包含 `name` 和 `description`，以及 `agents/openai.yaml` 是否能被解析。
+
+## 参考来源
+
+- [OpenAI Codex — Follow a goal](https://developers.openai.com/codex/use-cases/follow-goals)：强调长期任务需要 durable objective、可验证的完成条件和验证循环。
+- [OpenAI Codex — Save workflows as skills](https://developers.openai.com/codex/use-cases/reusable-codex-skills)：说明 skill 可以沉淀 reusable instructions、resources、scripts，对应本仓库的 skill 结构。
+- [飞书 /goal 调研文档](https://xiangyangqiaomu.feishu.cn/wiki/YQn6wZ1hzijlRvkU1E6cEL5mnic)：本仓库六要素和本地工作流规则整理的主要启发来源。
+- 本仓库的 [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md) 和 [templates.md](./skills/goal-writer/references/templates.md)：上述来源在 Codex skill 里的本地化落地。
 
 ## 仓库结构
 
