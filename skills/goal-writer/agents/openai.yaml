@@ -4,4 +4,4 @@ interface:
   default_prompt: "Use $goal-writer to turn this task into a strong Codex /goal prompt."
 
 policy:
-  allow_implicit_invocation: true
+  allow_implicit_invocation: false

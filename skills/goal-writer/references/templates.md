@@ -30,6 +30,16 @@ Pause if:
 - [missing credentials / risky write / business decision / repeated failure / no progress]
 ```
 
+## Long Contract Pointer
+
+Use when the full contract would make the `/goal` body too long or hard to scan.
+
+```text
+/goal Complete [outcome] by following [GOAL.md or GOAL_CHECKLIST.md], keeping its verification evidence, write boundaries, iteration policy, and pause conditions current until completion.
+```
+
+The pointed file should contain the full six-element contract plus any phase checklist, evidence table, or rollback plan needed for the task.
+
 ## Software Delivery
 
 ```text

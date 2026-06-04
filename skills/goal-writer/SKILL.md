@@ -1,6 +1,6 @@
 ---
 name: goal-writer
-description: Use when the user asks for a /goal, goal prompt, 目标模式提示词, goal-mode task contract, or critique of a goal prompt for a task that exceeds the current turn or needs durable verification, write boundaries, and stop/pause conditions. Turns vague work into a copy-ready /goal.
+description: Use when the user asks for a /goal, goal prompt, 目标模式提示词, goal-mode task contract, or critique of a goal prompt for work that exceeds the current turn or needs durable verification, write boundaries, and stop/pause conditions.
 metadata:
   short-description: Write high-quality Codex /goal prompts
 ---
@@ -9,7 +9,7 @@ metadata:
 
 Use this skill only when a Codex task needs a durable goal contract with verifiable evidence and safe boundaries. A good goal is bigger than one prompt and smaller than an open backlog.
 
-AGENTS.md is the trigger gate; this skill is the generator. If AGENTS requires `$goal-writer`, follow this skill to produce or review the goal prompt.
+Invocation should be explicit: either the user invokes `$goal-writer` or an AGENTS.md routing rule requires it for this request. Because goal mode adds process weight, skip this skill for ordinary one-turn tasks, simple status checks, or tasks the user wants handled immediately without goal mode.
 
 If the caller provides a project risk label, reflect it in the goal strictness. Do not assume a specific framework; use plain labels such as low risk, medium risk, and high risk unless the user provides their own scheme. For high-risk work, include review, rollback, explicit approval, and stronger verification gates.
 
@@ -27,6 +27,23 @@ Every finalized goal must include at least one verifiable evidence surface, one 
 - `Stop/Pause conditions`: when completion is proven and when to stop for the user.
 
 If any required element is missing and cannot be discovered from repo/docs/context, ask the user concise questions before finalizing. Do not invent verification commands, risky write boundaries, credentials, production approval, or business decisions.
+
+## Long Goal Handling
+
+Do not exceed the Codex /goal objective length. Keep the `/goal` body concise enough to paste into goal mode and move detailed contracts into a file when needed.
+
+When the contract would be too long for a clean `/goal` body, produce one of these shapes:
+
+- If file writes are allowed, create or update `GOAL.md` or `GOAL_CHECKLIST.md` with the full contract, then output a short `/goal` that points to that file.
+- If file writes are not allowed, output a short `/goal` plus a separate `GOAL.md` draft block the user can save.
+
+The short `/goal` must still name the outcome, the contract file path, and the evidence that proves completion.
+
+## Question Budget
+
+Ask at most 1-3 concise questions before finalizing. Ask only for information that cannot be discovered from repo/docs/context and would make the goal unsafe or unverifiable.
+
+For low-risk or medium-risk work, proceed with clear assumptions when the missing detail is easy to infer. State those assumptions in the explanation before the goal. For high-risk work, do not assume approval, credentials, production access, deploy authority, destructive writes, or business decisions.
 
 ## Workflow
 
@@ -65,3 +82,4 @@ Reference paths are relative to this skill directory.
 
 - Read `references/goal-quality-standard.md` when judging or rewriting a weak goal.
 - Read `references/templates.md` when the user wants a reusable template or when the task type needs a starting shape.
+- Read `references/eval-scenarios.md` when changing this skill or checking whether its outputs handle common failure modes.

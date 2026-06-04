@@ -46,6 +46,18 @@ bash scripts/install.sh
 ~/.agents/skills/goal-writer/
 ```
 
+常用选项：
+
+```bash
+bash scripts/install.sh --dry-run
+bash scripts/install.sh --repo-local
+bash scripts/install.sh --force
+```
+
+- `--dry-run`：只打印安装目标，不复制文件。
+- `--repo-local`：安装到当前 git 仓库的 `.agents/skills/goal-writer/`，适合团队共享。
+- `--force`：替换已有的 `goal-writer` skill 目录。默认不会覆盖已有目录。
+
 如果你想手动安装：
 
 ```bash
@@ -64,9 +76,13 @@ Use $goal-writer to turn this task into a strong /goal prompt:
 把 Codex Flow 完整推进到 v1.6。
 ```
 
-装好 AGENTS 触发规则后，当你要求写 `/goal`、目标模式提示词、开目标模式，或者让一个超过当前回合的任务“完整跑完”时，agent 应该先判断是否需要 `goal-writer`。
+这个 skill 默认要求显式调用：你可以在提示词里写 `$goal-writer`，或者把 [AGENTS_SNIPPET.md](./AGENTS_SNIPPET.md) 加到 `AGENTS.md` 里作为路由规则。它不会依赖隐式触发来拦截普通小任务。
+
+装好 AGENTS 路由规则后，当你要求写 `/goal`、目标模式提示词、开目标模式，或者让一个超过当前回合的任务“完整跑完”时，agent 应该先判断是否需要 `goal-writer`。
 
 如果任务需要验证命令、写入边界、停止/暂停条件，就应该先走 `goal-writer`，再输出可复制的 `/goal`。
+
+如果生成的 goal 太长，不应该把所有细节硬塞进 `/goal`。更好的做法是把详细契约写入或草拟到 `GOAL.md` / `GOAL_CHECKLIST.md`，然后让 `/goal` 指向这个文件。
 
 ## 示例
 
@@ -124,6 +140,7 @@ skill 里带了两份参考材料：
 
 - [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md)：六要素标准、常见坏 goal、修法。
 - [templates.md](./skills/goal-writer/references/templates.md)：软件交付、多阶段路线图、文档同步、调研报告等模板。
+- [eval-scenarios.md](./skills/goal-writer/references/eval-scenarios.md)：改 skill 时用的压力场景，覆盖模糊交付、高风险外部写、过大路线图和缺少验证面的情况。
 
 `SKILL.md` 保持短，详细内容放在 `references/` 里，避免每次触发都塞太多上下文。
 
@@ -165,12 +182,12 @@ High-risk safety:
 bash scripts/validate.sh
 ```
 
-这个脚本会检查 skill 文件是否存在，`SKILL.md` frontmatter 是否包含 `name` 和 `description`，以及 `agents/openai.yaml` 是否能被解析。
+这个脚本会检查 skill 文件是否存在，`SKILL.md` frontmatter 是否包含 `name` 和 `description`，`agents/openai.yaml` 是否能被解析，触发策略是否要求显式调用，以及关键 reference / installer 规则是否存在。
 
 ## 参考来源
 
-- [OpenAI Codex — Follow a goal](https://developers.openai.com/codex/use-cases/follow-goals)：强调长期任务需要 durable objective、可验证的完成条件和验证循环。
-- [OpenAI Codex — Save workflows as skills](https://developers.openai.com/codex/use-cases/reusable-codex-skills)：说明 skill 可以沉淀 reusable instructions、resources、scripts，对应本仓库的 skill 结构。
+- [OpenAI Codex — Goal mode](https://developers.openai.com/codex/prompting#goal-mode)：强调长期任务需要 durable objective、可验证的完成条件和验证循环。
+- [OpenAI Codex — Agent Skills](https://developers.openai.com/codex/skills)：说明 skill 可以沉淀 reusable instructions、resources、scripts，对应本仓库的 skill 结构。
 - [飞书 /goal 调研文档](https://xiangyangqiaomu.feishu.cn/wiki/YQn6wZ1hzijlRvkU1E6cEL5mnic)：本仓库六要素和本地工作流规则整理的主要启发来源。
 - 本仓库的 [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md) 和 [templates.md](./skills/goal-writer/references/templates.md)：上述来源在 Codex skill 里的本地化落地。
 
@@ -191,6 +208,7 @@ bash scripts/validate.sh
         │   └── openai.yaml
         └── references/
             ├── goal-quality-standard.md
+            ├── eval-scenarios.md
             └── templates.md
 ```
 

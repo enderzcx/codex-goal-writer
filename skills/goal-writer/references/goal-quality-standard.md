@@ -38,6 +38,10 @@ List evidence Codex can run or read:
 
 If verification does not exist, the goal can include creating a verification script before changing production code.
 
+### Goal Length
+
+Keep the slash-command objective compact. If the contract would be long, move the detailed requirements, evidence table, and phase checklist into `GOAL.md` or `GOAL_CHECKLIST.md`, then make `/goal` point to that file.
+
 ### Constraints
 
 State what must not change:
@@ -99,6 +103,7 @@ Pause when:
 
 - Outcome is a final state.
 - Verification is concrete and auditable.
+- Long contracts point to a file instead of crowding the `/goal` body.
 - Constraints prevent shortcuts.
 - Boundaries say where writes are allowed.
 - Iteration policy prevents blind loops.
