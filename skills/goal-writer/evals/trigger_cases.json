@@ -1,0 +1,50 @@
+{
+  "should_trigger": [
+    {
+      "text": "给我一个可以复制的 /goal，跑完整个迁移任务。",
+      "family": "copy_ready_goal_cn"
+    },
+    {
+      "text": "Write a goal-mode prompt with allowed writes, verification, and stop conditions.",
+      "family": "goal_contract_en"
+    },
+    {
+      "text": "这个任务要超过当前 turn，帮我写目标模式提示词。",
+      "family": "long_running_goal_cn"
+    },
+    {
+      "text": "review 这个 goal prompt 有没有缺边界和验证。",
+      "family": "goal_review_cn"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "帮我写一个 PRD 和 SPEC。",
+      "family": "delivery_docs"
+    },
+    {
+      "text": "直接修这个 bug。",
+      "family": "implementation"
+    },
+    {
+      "text": "给我一个普通计划，不要 goal mode。",
+      "family": "plan_only"
+    },
+    {
+      "text": "润色这段中文。",
+      "family": "prose_polish"
+    }
+  ],
+  "near_neighbors": [
+    {
+      "text": "帮我把项目计划、验收和 goal 都落成文件。",
+      "expected_route": "delivery-planner then goal-writer rules",
+      "reason": "Broader delivery docs need planning context before the goal prompt."
+    },
+    {
+      "text": "这个功能怎么设计？",
+      "expected_route": "think",
+      "reason": "Pure design discussion is not goal writing unless the user asks for goal-mode execution."
+    }
+  ]
+}

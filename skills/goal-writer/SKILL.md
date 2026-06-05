@@ -1,8 +1,9 @@
 ---
 name: goal-writer
-description: Use when the user asks for a /goal, goal prompt, 目标模式提示词, goal-mode task contract, or critique of a goal prompt for a task that exceeds the current turn or needs durable verification, write boundaries, and stop/pause conditions. Turns vague work into a copy-ready /goal.
+description: Use when the user asks for a /goal, goal prompt, 目标模式提示词, goal-mode task contract, or critique of a goal prompt for a task that exceeds the current turn or needs durable verification, write boundaries, and stop/pause conditions. Turns vague work into a copy-ready /goal. Not for ordinary plans, PRDs/SPECs without goal-mode handoff, quick one-turn tasks, implementation work, or prose polish.
 metadata:
   short-description: Write high-quality Codex /goal prompts
+sunny_skill_type: contract
 ---
 
 # goal-writer
@@ -65,3 +66,5 @@ Reference paths are relative to this skill directory.
 
 - Read `references/goal-quality-standard.md` when judging or rewriting a weak goal.
 - Read `references/templates.md` when the user wants a reusable template or when the task type needs a starting shape.
+- Use `templates/goal-prompt.md` as the copy-ready output skeleton when creating a new goal.
+- Run `python3 scripts/check_goal_prompt.py <goal-file.md>` when a goal prompt is saved to a file or needs mechanical validation.
