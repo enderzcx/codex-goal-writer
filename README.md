@@ -68,16 +68,6 @@ Use $goal-writer to turn this task into a strong /goal prompt:
 
 如果任务需要验证命令、写入边界、停止/暂停条件，就应该先走 `goal-writer`，再输出可复制的 `/goal`。
 
-### Goal + CWF
-
-当任务需要“目标模式 + CWF”一起跑时，`goal-writer` 会把 `/goal` 写成外层 `Goal Anchor`，再把每一次 CWF / dynamic workflow 视为一个有边界的执行 episode。
-
-这类 goal 会额外要求：
-
-- 每次 CWF run 只处理当前 slice，不替代外层目标。
-- 每次 CWF run 结束都回写 `goal_delta`。
-- `goal_delta` 包含 `run_id`、`completed`、`evidence_added`、`blockers`、`next_slice`、`next_cwf_run`、`continue_or_stop`、`progress_artifact_update`。
-
 ## 示例
 
 不好的目标：
@@ -130,12 +120,10 @@ Pause if:
 
 ## 内置参考
 
-skill 里带了参考材料和校验资产：
+skill 里带了两份参考材料：
 
 - [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md)：六要素标准、常见坏 goal、修法。
 - [templates.md](./skills/goal-writer/references/templates.md)：软件交付、多阶段路线图、文档同步、调研报告等模板。
-- [templates/goal-prompt.md](./skills/goal-writer/templates/goal-prompt.md)：复制型 `/goal` 输出骨架。
-- [evals/trigger_cases.json](./skills/goal-writer/evals/trigger_cases.json)：触发和近邻路由样例。
 
 `SKILL.md` 保持短，详细内容放在 `references/` 里，避免每次触发都塞太多上下文。
 
@@ -201,17 +189,9 @@ bash scripts/validate.sh
         ├── SKILL.md
         ├── agents/
         │   └── openai.yaml
-        ├── evals/
-        │   └── trigger_cases.json
-        ├── examples/
-        │   └── valid-goal.md
-        ├── references/
+        └── references/
             ├── goal-quality-standard.md
             └── templates.md
-        ├── scripts/
-        │   └── check_goal_prompt.py
-        └── templates/
-            └── goal-prompt.md
 ```
 
 ## 许可

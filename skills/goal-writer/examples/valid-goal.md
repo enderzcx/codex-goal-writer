@@ -1,18 +1,21 @@
 # Valid Goal Example
 
 ```text
-/goal Ship the local skill checker so Sunny-style skills can be classified and validated before handoff.
+/goal Ship the package validation command so contributors can verify changes before handoff.
 
 Verification:
-- python3 scripts/check_sunny_skill.py ~/.agents/skills/sunny-meta-skill
+- npm test
+- npm run lint
 
 Constraints:
-- Do not change unrelated skills.
+- Do not change runtime behavior outside package validation.
 - Do not publish or push unless the user explicitly asks.
 
 Boundaries:
 Allowed writes:
-- ~/.agents/skills/sunny-meta-skill/**
+- package.json
+- scripts/**
+- tests/**
 Do not edit:
 - credentials
 - production systems
@@ -25,7 +28,7 @@ Iteration policy:
 - Do not repeat an identical failed approach.
 
 Stop when:
-- The checker passes and the final response lists files changed and commands run.
+- The validation command passes and the final response lists files changed and commands run.
 
 Pause if:
 - A GitHub publish, production write, credential, or business decision is needed.
