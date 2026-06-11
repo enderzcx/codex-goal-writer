@@ -13,6 +13,10 @@
       "family": "long_running_goal_cn"
     },
     {
+      "text": "看这个多阶段 spec 里的目标提示词，写一个能一路搞完整个计划的 /goal。",
+      "family": "orchestrator_goal_cn"
+    },
+    {
       "text": "review 这个 goal prompt 有没有缺边界和验证。",
       "family": "goal_review_cn"
     }
@@ -40,6 +44,11 @@
       "text": "帮我把项目计划、验收和 goal 都落成文件。",
       "expected_route": "delivery-planner then goal-writer rules",
       "reason": "Broader delivery docs need planning context before the goal prompt."
+    },
+    {
+      "text": "这个 plan 有 5 个 phase，但我要一个 active goal 持续推进到完成。",
+      "expected_route": "goal-writer orchestrator goal",
+      "reason": "Whole-plan execution intent should create an orchestrator goal that manages staged child goals instead of a child-only goal."
     },
     {
       "text": "这个功能怎么设计？",
