@@ -30,6 +30,44 @@ Pause if:
 - [missing credentials / risky write / business decision / repeated failure / no progress]
 ```
 
+## Goal + CWF
+
+Use when the user wants Goal Mode to supervise repeated CWF runs.
+
+```text
+/goal Complete [outcome] with Goal Mode as the outer supervisor and CWF as bounded execution episodes.
+
+Verification:
+- [goal-level acceptance evidence]
+- Each CWF episode records commands/artifacts/evidence in its run plan and returns `goal_delta`.
+
+Constraints:
+- Do not treat one CWF episode as completion unless goal-level acceptance is met.
+- Do not spawn workflow workers unless the EWC CWF Trigger Boundary is satisfied.
+- Do not continue blindly after repeated no-progress CWF episodes.
+
+Boundaries:
+Allowed writes:
+- [paths]
+Do not edit:
+- [paths/systems]
+
+Iteration policy:
+- Maintain GOAL_CHECKLIST.md or GOAL_PROGRESS.md with current slice, completed work, evidence, blockers, and next slice.
+- Before each CWF episode, define the slice, trigger boundary, budget, and stop rule.
+- After each CWF episode, return `goal_delta` with `run_id`, `completed`, `evidence_added`, `blockers`, `next_slice`, `next_cwf_run`, `continue_or_stop`, and `progress_artifact_update`.
+
+CWF episode policy:
+- Use CWF for fan-out, clean contexts, adversarial verification, safe-fix-loop, background/resume, or workflow state.
+- Prefer direct Codex work when one turn is smaller and safer.
+
+Stop when:
+- Goal-level acceptance is met and final evidence is summarized.
+
+Pause if:
+- The same blocker repeats, budget is exhausted, CWF trigger boundary is no longer met, or a risky external action is needed.
+```
+
 ## Software Delivery
 
 ```text

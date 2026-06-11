@@ -45,6 +45,16 @@ Ship Codex Flow through v1.6.
 
 The output should be a copy-ready `/goal` prompt with verification commands, write boundaries, and pause conditions.
 
+### Goal + CWF
+
+When a task should run under Goal Mode plus CWF, `goal-writer` writes the `/goal` as the outer `Goal Anchor` and treats each CWF or dynamic workflow run as a bounded execution episode.
+
+These goals additionally require:
+
+- each CWF run to stay within the current slice;
+- each CWF run to return `goal_delta`;
+- `goal_delta` to include `run_id`, `completed`, `evidence_added`, `blockers`, `next_slice`, `next_cwf_run`, `continue_or_stop`, and `progress_artifact_update`.
+
 ## Validate
 
 ```bash
@@ -66,6 +76,14 @@ skills/goal-writer/
   references/
     goal-quality-standard.md
     templates.md
+  templates/
+    goal-prompt.md
+  evals/
+    trigger_cases.json
+  examples/
+    valid-goal.md
+  scripts/
+    check_goal_prompt.py
   agents/openai.yaml
 scripts/
   install.sh

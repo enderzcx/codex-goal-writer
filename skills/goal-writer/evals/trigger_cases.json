@@ -13,6 +13,14 @@
       "family": "long_running_goal_cn"
     },
     {
+      "text": "帮我写一个目标模式提示词，让 CWF 一轮一轮跑并且每轮回写 goal_delta。",
+      "family": "goal_plus_cwf_cn"
+    },
+    {
+      "text": "这个 CWF 可能一轮就能完，但我还是要目标模式挂住并输出 final goal_delta。",
+      "family": "goal_plus_cwf_single_episode_cn"
+    },
+    {
       "text": "review 这个 goal prompt 有没有缺边界和验证。",
       "family": "goal_review_cn"
     }
