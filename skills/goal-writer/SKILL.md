@@ -89,5 +89,8 @@ Reference paths are relative to this skill directory.
 
 - Read `references/goal-quality-standard.md` when judging or rewriting a weak goal.
 - Read `references/templates.md` when the user wants a reusable template or when the task type needs a starting shape.
+- Read `references/verification-surfaces.md` when designing the Verification section of a goal or when the goal lacks a concrete way to prove completion.
+- Read `references/failure-modes.md` when a goal is looping, finishing too early, consuming budget without progress, or producing unsafe side effects.
+- Read `references/pm-scenarios.md` when the user is a PM or product person who wants to use /goal for research, backlog triage, release readiness, or decision preparation without writing production code.
 - Use `templates/goal-prompt.md` as the copy-ready output skeleton when creating a new goal.
 - Run `python3 scripts/check_goal_prompt.py <goal-file.md>` when a goal prompt is saved to a file or needs mechanical validation.
