@@ -2,11 +2,18 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SKILL="$ROOT/skills/goal-writer"
 
-test -f "$ROOT/skills/goal-writer/SKILL.md"
-test -f "$ROOT/skills/goal-writer/references/goal-quality-standard.md"
-test -f "$ROOT/skills/goal-writer/references/templates.md"
-test -f "$ROOT/skills/goal-writer/agents/openai.yaml"
+test -f "$SKILL/SKILL.md"
+test -f "$SKILL/agents/openai.yaml"
+test -f "$SKILL/evals/trigger_cases.json"
+
+for obsolete in references templates scripts examples; do
+  if [[ -e "$SKILL/$obsolete" ]]; then
+    echo "Obsolete package path remains: $SKILL/$obsolete" >&2
+    exit 1
+  fi
+done
 
 ruby -ryaml -e '
   skill = ARGV[0]
@@ -16,8 +23,9 @@ ruby -ryaml -e '
   data = YAML.safe_load(yaml)
   abort("missing name") unless data["name"]
   abort("missing description") unless data["description"]
-' "$ROOT/skills/goal-writer/SKILL.md"
+' "$SKILL/SKILL.md"
 
-ruby -ryaml -e 'YAML.safe_load(File.read(ARGV[0]))' "$ROOT/skills/goal-writer/agents/openai.yaml"
+ruby -ryaml -e 'YAML.safe_load(File.read(ARGV[0]))' "$SKILL/agents/openai.yaml"
+python3 -m json.tool "$SKILL/evals/trigger_cases.json" >/dev/null
 
 echo "goal-writer skill OK"

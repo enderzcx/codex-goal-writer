@@ -1,7 +1,7 @@
 interface:
   display_name: "Goal Writer"
-  short_description: "Writes verifiable, bounded /goal prompts."
-  default_prompt: "Use $goal-writer to turn this task into a strong Codex /goal prompt."
+  short_description: "编写简洁、中文优先的 /goal。"
+  default_prompt: "使用 $goal-writer，把这个任务改写成简洁、中文优先的 Codex /goal，包含最终结果、重要约束和完成验证。"
 
 policy:
   allow_implicit_invocation: true

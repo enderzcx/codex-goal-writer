@@ -10,8 +10,16 @@ if [[ ! -f "$SOURCE/SKILL.md" ]]; then
   exit 1
 fi
 
+case "$TARGET" in
+  */goal-writer) ;;
+  *)
+    echo "Refusing unexpected install target: $TARGET" >&2
+    exit 1
+    ;;
+esac
+
+rm -rf "$TARGET"
 mkdir -p "$TARGET"
 cp -R "$SOURCE"/. "$TARGET"/
 
 echo "Installed goal-writer skill to $TARGET"
-echo "Add AGENTS_SNIPPET.md to AGENTS.md if you want automatic goal prompt routing."

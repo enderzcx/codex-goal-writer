@@ -1,23 +1,41 @@
 # Codex Goal Writer
 
-`goal-writer` is a small Codex skill for turning vague long-running work into a copy-ready `/goal` contract.
+A concise, Chinese-first Codex skill that turns vague or long-running work into a copy-ready `/goal`.
 
-It helps Codex write goals that have evidence, boundaries, iteration rules, and stop conditions, instead of broad prompts like "finish the roadmap" or "make this better".
+It keeps only the three things native Goal Mode needs from the prompt:
 
-## What It Enforces
+- **Outcome:** the final state, not merely an activity.
+- **Material constraints:** boundaries, compatibility requirements, or approval points that prevent real problems.
+- **Verification:** tests, measurements, artifacts, or review criteria that prove completion.
 
-Every finalized goal should include:
+It does not force every goal into a long form or repeat planning, iteration, and state-management behavior already provided by Codex.
 
-- `Outcome`: the final state, not just activity.
-- `Verification`: commands, artifacts, screenshots, reports, or external state that prove completion.
-- `Constraints`: behavior and safety rules that must not change.
-- `Boundaries`: allowed writes and forbidden paths or systems.
-- `Iteration policy`: how Codex should work each loop.
-- `Stop/Pause conditions`: when the goal is complete and when Codex must stop for the user.
+## Output
+
+The default output is natural Chinese:
+
+```text
+/goal <最终结果>。<真正重要的约束>。<可验证的完成标准>。
+```
+
+For example:
+
+```text
+/goal 把这个代码库迁移到 TypeScript，保留现有行为，开启 strict mode 且不使用显式 any，并让完整测试套件通过。
+```
+
+The actual goal may be longer, but every sentence should materially help the task.
+
+## Use It For
+
+- Writing an explicit `/goal` or Goal Mode prompt.
+- Giving long-running work a durable final objective.
+- Handing an existing plan, spec, or roadmap to Goal Mode.
+- Reviewing whether an existing goal has a clear outcome, constraints, and verification.
+
+Do not use it for ordinary plans or PRDs, one-turn work, direct implementation, or prose polishing.
 
 ## Install
-
-Clone and install the skill:
 
 ```bash
 git clone https://github.com/enderzcx/codex-goal-writer.git
@@ -25,25 +43,27 @@ cd codex-goal-writer
 bash scripts/install.sh
 ```
 
-Or copy it manually:
+The skill is installed to:
 
-```bash
-mkdir -p ~/.agents/skills
-cp -R skills/goal-writer ~/.agents/skills/
+```text
+~/.agents/skills/goal-writer/
 ```
 
-Then add the trigger snippet from [AGENTS_SNIPPET.md](AGENTS_SNIPPET.md) to your `AGENTS.md`.
+Running the installer again replaces the previous package so obsolete templates and checkers do not remain.
 
 ## Use
 
-Ask Codex for a goal prompt:
-
 ```text
-Use $goal-writer to turn this task into a strong /goal prompt:
-Ship Codex Flow through v1.6.
+Use $goal-writer to turn this migration into a concise, copy-ready Chinese /goal.
 ```
 
-The output should be a copy-ready `/goal` prompt with verification commands, write boundaries, and pause conditions.
+Implicit invocation is enabled through the skill description; no extra global `AGENTS.md` snippet is required.
+
+## Boundary
+
+This repository generates or reviews generic `/goal` prompts. It does not execute the goal, route models, provide a background worker, invent permissions or verification commands, or embed private operating frameworks.
+
+For long or multi-stage work, the goal should reference the authoritative plan, spec, or roadmap instead of duplicating an orchestration protocol.
 
 ## Validate
 
@@ -51,28 +71,24 @@ The output should be a copy-ready `/goal` prompt with verification commands, wri
 bash scripts/validate.sh
 ```
 
-## References
-
-- [OpenAI Codex — Follow a goal](https://developers.openai.com/codex/use-cases/follow-goals): highlights durable objectives, verifiable stopping conditions, and validation loops for long-running work.
-- [OpenAI Codex — Save workflows as skills](https://developers.openai.com/codex/use-cases/reusable-codex-skills): describes skills as reusable bundles of instructions, resources, and scripts, which is the structure used here.
-- [Feishu /goal research doc](https://xiangyangqiaomu.feishu.cn/wiki/YQn6wZ1hzijlRvkU1E6cEL5mnic): the main inspiration for the six-element structure and local workflow rules.
-- This repo's [goal-quality-standard.md](./skills/goal-writer/references/goal-quality-standard.md) and [templates.md](./skills/goal-writer/references/templates.md): the localized implementation of those references inside the Codex skill.
-
-## Repo Layout
+## Layout
 
 ```text
 skills/goal-writer/
   SKILL.md
-  references/
-    goal-quality-standard.md
-    templates.md
   agents/openai.yaml
+  evals/trigger_cases.json
 scripts/
   install.sh
   validate.sh
-AGENTS_SNIPPET.md
 ```
 
-## Boundary
+## References
 
-This repo does not add a runtime, model router, background worker, or GitHub automation. It is just a Codex skill plus a small AGENTS trigger rule.
+- [OpenAI Codex: Follow a goal](https://developers.openai.com/codex/use-cases/follow-goals)
+- [OpenAI Codex: Save workflows as skills](https://developers.openai.com/codex/use-cases/reusable-codex-skills)
+- [qiaomu-goal-meta-skill](https://github.com/joeseesun/qiaomu-goal-meta-skill)
+
+## License
+
+MIT License.

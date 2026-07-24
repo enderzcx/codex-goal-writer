@@ -1,23 +1,19 @@
 {
   "should_trigger": [
     {
-      "text": "给我一个可以复制的 /goal，跑完整个迁移任务。",
+      "text": "给我一个可以直接复制的中文 /goal，完成这个迁移。",
       "family": "copy_ready_goal_cn"
     },
     {
-      "text": "Write a goal-mode prompt with allowed writes, verification, and stop conditions.",
+      "text": "Turn this long-running task into a concise Codex Goal Mode prompt.",
       "family": "goal_contract_en"
     },
     {
-      "text": "这个任务要超过当前 turn，帮我写目标模式提示词。",
-      "family": "long_running_goal_cn"
+      "text": "这个 roadmap 我要用 Goal Mode 持续做到验收完成。",
+      "family": "roadmap_goal_cn"
     },
     {
-      "text": "看这个多阶段 spec 里的目标提示词，写一个能一路搞完整个计划的 /goal。",
-      "family": "orchestrator_goal_cn"
-    },
-    {
-      "text": "review 这个 goal prompt 有没有缺边界和验证。",
+      "text": "review 这个 /goal 的结果、约束和完成验证是否清楚。",
       "family": "goal_review_cn"
     }
   ],
@@ -43,17 +39,17 @@
     {
       "text": "帮我把项目计划、验收和 goal 都落成文件。",
       "expected_route": "delivery-planner then goal-writer rules",
-      "reason": "Broader delivery docs need planning context before the goal prompt."
+      "reason": "更广的交付文档需要先形成计划上下文，再编写 goal。"
     },
     {
-      "text": "这个 plan 有 5 个 phase，但我要一个 active goal 持续推进到完成。",
-      "expected_route": "goal-writer orchestrator goal",
-      "reason": "Whole-plan execution intent should create an orchestrator goal that manages staged child goals instead of a child-only goal."
+      "text": "这个多阶段 roadmap 已经写好了，给我一个 /goal 完成它。",
+      "expected_route": "goal-writer referencing the authoritative roadmap",
+      "reason": "Goal Mode 可以持续追踪目标，无需复制路线图或另造一套编排协议。"
     },
     {
       "text": "这个功能怎么设计？",
       "expected_route": "think",
-      "reason": "Pure design discussion is not goal writing unless the user asks for goal-mode execution."
+      "reason": "纯设计讨论不属于 goal 编写，除非用户要求交给 Goal Mode 执行。"
     }
   ]
 }
